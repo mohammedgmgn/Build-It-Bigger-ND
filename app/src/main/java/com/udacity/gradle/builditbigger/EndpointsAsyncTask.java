@@ -3,6 +3,7 @@ package com.udacity.gradle.builditbigger;
 import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
+import android.text.format.Formatter;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -11,6 +12,8 @@ import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 import com.google.gmgn.myapplication.backend.myApi.MyApi;
 
 import java.io.IOException;
+
+import static android.content.Context.WIFI_SERVICE;
 
 /**
  * Created by gmgn on 2/6/2017.
@@ -30,8 +33,8 @@ public class EndpointsAsyncTask extends AsyncTask<OnJokeReceivedListener, Void, 
     @Override
     protected String doInBackground(OnJokeReceivedListener... params) {
         if(myApiService == null) {  // Only do this once
-       //     wm = (WifiManager)context.getSystemService(WIFI_SERVICE);
-         //   ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+            wm = (WifiManager)context.getSystemService(WIFI_SERVICE);
+            ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
 
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
@@ -42,7 +45,8 @@ public class EndpointsAsyncTask extends AsyncTask<OnJokeReceivedListener, Void, 
                     //http://10.0.2.2:8080/_ah/api/
                     //joketeller-158011
                     //builditbigger-157911
-                    .setRootUrl("https://joketeller-158011.appspot.com/_ah/api/")
+
+                    .setRootUrl("http://10.0.3.2:8080/_ah/api/")
                     .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                         @Override
                         public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {

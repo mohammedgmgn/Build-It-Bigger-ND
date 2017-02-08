@@ -13,7 +13,6 @@ buildscript {
 repositories {
     jcenter();
 }
-
 apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'appengine'
@@ -22,6 +21,7 @@ sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
 
 dependencies {
+    appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.34'
     compile 'com.google.appengine:appengine-endpoints:1.9.34'
     compile 'com.google.appengine:appengine-endpoints-deps:1.9.34'
     compile 'javax.servlet:servlet-api:2.5'
@@ -29,6 +29,7 @@ dependencies {
 }
 
 appengine {
+    downloadSdk = false
     appcfg {
         oauth2 = true
     }
